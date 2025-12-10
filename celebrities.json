@@ -1,0 +1,18 @@
+{
+  "taylor-swift": {
+    "name": "Taylor Swift",
+    "genius_artist": "Taylor Swift"
+  },
+  "joji": {
+    "name": "Joji",
+    "genius_artist": "Joji"
+  },
+  "travis-scott": {
+    "name": "Travis Scott",
+    "genius_artist": "Travis Scott"
+  },
+  "finneas": {
+    "name": "Finneas",
+    "genius_artist": "Finneas"
+  }
+}
