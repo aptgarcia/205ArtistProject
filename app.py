@@ -1,3 +1,15 @@
+#NOTE:
+#Some helper functions and logic in this backend app.py were developed with assistance from ChatGPT.
+#This includes structuring the Genius API calls, handling primary-artist filtering,
+#and correctly implementing the BeautifulSoup lyric-scraping function(there were alot of problems/bugs 
+#with this function). 
+# #These features required concepts more advanced than what we covered, including:
+# - calling the Genius API and handling dynamic JSON responses that change based on artist,
+#   song selection, or API search results,
+# - and performing HTML scraping with BeautifulSoup to extract lyric text from Genius webpages
+#   by locating specific HTML containers (<div data-lyrics-container="true">) and cleaning the output., 
+# so ChatGPT was used to help guide and fix bugs for these portions of the implementation. 
+# All code was reviewed, adapted, and integrated by our project team before finalizing this project.
 from flask import Flask, render_template, jsonify, abort
 import requests
 import random
@@ -18,7 +30,7 @@ GENIUS_API_URL = "https://api.genius.com"
 GENIUS_TOKEN = "ZIAi4fLqPeoMefSqzipUPYK9ryLD-wbcN81CvWy9m4xbKzDlXB7SAx4QPJ9VwbRO"
 
 
-def genius_get(path, **params):  #using genius API examples
+def genius_get(path, **params):  #using genius API examples from their documentation https://docs.genius.com/#resources-h1
     headers = {"Authorization": f"Bearer {GENIUS_TOKEN}"}
     resp = requests.get(f"{GENIUS_API_URL}{path}", headers=headers, params=params, timeout=10)
     resp.raise_for_status()
@@ -58,6 +70,13 @@ def get_artist_songs(artist_id: int, pages: int = 3):
     return songs
 
 
+#The lyric-scraping process combines the Genius API and BeautifulSoup.
+#The Genius API is used only to discover songs and retrieve their official
+#Genius webpage URLs (the API does not provide lyric text). Once we have the
+#correct URL for a song, BeautifulSoup loads the webpage and extracts the
+#actual lyric lines from <div data-lyrics-container="true"> elements.
+#This hybrid API + scraping approach is required because free Genius API
+#access does not include lyrical content.
 def scrape_two_lyric_lines(song_url: str): 
     #Extract two consecutive lyric lines from the actual song lyrics only.
     #Uses Genius lyric containers (<div data-lyrics-container="true">) Skips section headers like [Chorus], [Verse 1], and very short filler lines.
