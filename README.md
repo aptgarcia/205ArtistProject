@@ -2,7 +2,9 @@
 
 ### A Flask-based web application that retrieves random lyrics for pre-selected artists by combining the Genius API (for metadata) with HTML scraping via BeautifulSoup (for actual lyric text), 
 ### ChatGPT was used during development and is further explained in this section below: 
-[### How We Used ChatGPT in the Development Process](https://github.com/aptgarcia/205ArtistProject/edit/main/README.md#how-we-used-chatgpt-in-the-development-process-1)
+
+### How We Used ChatGPT in the Development Process
+
 ## The app includes artist themed pages, dynamic quote loading, and browser-side TTS.
 
 ## Installation & Setup Guide
