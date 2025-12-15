@@ -77,7 +77,7 @@ Requests the official Genius webpage
 
 Parses HTML using BeautifulSoup
 
-Extracts only <div data-lyrics-container="true"> content
+Extracts only div data-lyrics-container="true" content
 
 Removes section headings (e.g., “[Chorus]”, “[Verse]”)
 
@@ -154,7 +154,7 @@ scrape lyrics scrape_two_lyric_lines(song_url)→
 
 format quote fetch_song_quote(artist_name)
 
-Returns a dictionary used by both the HTML templates and the /api/quote/<slug> endpoint.
+Returns a dictionary used by both the HTML templates and the /api/quote/slug endpoint.
 
 ## Routes
 
