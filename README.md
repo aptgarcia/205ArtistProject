@@ -1,65 +1,62 @@
-Genius Quotes – CST205 Final Project
+# Genius Quotes – CST205 Final Project Documentation
 
-A Flask-based web application that retrieves random lyric excerpts for selected artists by combining the Genius API (for metadata)
-with HTML scraping via BeautifulSoup (for actual lyric text). The app includes artist themed pages, dynamic quote loading, and browser-side TTS.
+### A Flask-based web application that retrieves random lyrics for pre-selected artists by combining the Genius API (for metadata) with HTML scraping via BeautifulSoup (for actual lyric text), 
+### ChatGPT was used during development and is further explained in this section below: 
+[### How We Used ChatGPT in the Development Process](https://github.com/aptgarcia/205ArtistProject/edit/main/README.md#how-we-used-chatgpt-in-the-development-process-1)
+## The app includes artist themed pages, dynamic quote loading, and browser-side TTS.
 
-Installation & Setup Guide
+## Installation & Setup Guide
 
 Follow these steps before running the application.
 
-1. Install Dependencies
+## Install Dependencies
 
 All dependencies must be installed inside your CST205 virtual environment.
 
-For Windows, access your venv:
+## Activate your venv (Windows Example)
 PS C:\Users\user> cd C:\Users\user\Documents\cst205
+
 PS C:\Users\user\Documents\cst205> .\cst205env\Scripts\Activate.ps1
+
 (cst205env) PS C:\Users\user\Documents\cst205>
 
-Make sure you have these installed:
-Flask
-
+## Make sure you have these installed:
+### Flask
 Used for routing, template rendering, and serving the app.
 
 python -m pip install flask
 
-Requests
-
+### Requests
 Used to call the Genius API and download song webpages.
 
 python -m pip install requests
 
-BeautifulSoup4
-
+### BeautifulSoup4
 Used to scrape actual lyric content from Genius.
 
 python -m pip install beautifulsoup4
 
-Running the App on Windows
-
-You should be at this step here:
-
+## Running the App on Windows
+### You should be at this step here:
 (cst205env) PS C:\Users\user\Documents\cst205>
 
-Navigate to your project directory
-(cst205env) PS C:\Users\user\Documents\cst205> cd C:\Users\user\Documents\cst205\205Artist_Project\205ArtistProject
+### Navigate to your project directory
+cd C:\Users\user\Documents\cst205\205Artist_Project\205ArtistProject
+(Wherever you put the project folder after cloning the repo)
 
+### Run Flask
+flask --app app --debug run
 
-(Wherever you put the project folder after cloning the repo.)
-
-Run Flask
-(cst205env) PS C:\Users\user\Documents\cst205\205Artist_Project\205ArtistProject> flask --app app --debug run
-
-Open in browser by using:
+### Open in your browser
 http://127.0.0.1:5000/
 
-Summary of How the Application Works
+## Summary of How the Application Works
 
-This application displays random lyric excerpts for the following artists: Taylor Swift, Joji, Travis Scott, and Finneas.
+### This application displays random lyric excerpts for the following artists:
+### Taylor Swift, Joji, Travis Scott, and Finneas.
 
-The backend pipeline proceeds as follows:
-Genius API Lookup
-
+## Backend Pipeline Overview
+### 1. Genius API Lookup
 The Genius API is used to:
 
 Resolve the correct artist ID
@@ -68,15 +65,13 @@ Retrieve a list of that artist’s songs
 
 Filter only songs where the artist is the primary performer
 
-Random Song Selection
-
+### 2. Random Song Selection
 A song is randomly selected from the filtered metadata.
 
-HTML Scraping for Lyrics
-
+### 3. HTML Scraping for Lyrics
 Because the free Genius API does not provide lyrics, the app:
 
-Requests the official Genius webpage for the selected song
+Requests the official Genius webpage
 
 Parses HTML using BeautifulSoup
 
@@ -86,20 +81,18 @@ Removes section headings (e.g., “[Chorus]”, “[Verse]”)
 
 Removes filler words and short non-lyric lines
 
-Returns two consecutive lyric lines as the final excerpt
+Returns two consecutive lyric lines
 
-Dynamic Quote Display
+### 4. Dynamic Quote Display
+Clicking New Quote sends a jQuery request to a backend JSON endpoint:
 
-Clicking “New Quote” sends a jQuery request to a backend JSON endpoint:
+/api/quote/artist-slug
 
-/api/quote/<artist-slug>
+The lyric, song metadata, and Genius link update without reloading the page.
 
-
-The quote, song metadata, and Genius link are updated on the page without reloading.
-
-Text-to-Speech Functionality
-
+### 5. Text-to-Speech Functionality
 Each artist page specifies a preferred voice.
+
 The browser’s Web Speech API reads only the displayed lyric text aloud.
 
 Custom Artist Page Designs
@@ -108,16 +101,16 @@ Taylor Swift: List-based layout for albums and songs
 
 Joji: Drifting collage background and glass panel UI
 
-Travis Scott and Finneas: Themed layouts with custom styling
+Travis Scott & Finneas: Themed layouts with custom styling
 
-Project Structure
-project/
-├── app.py
-├── celebrities.json
-├── static/
-│   ├── css/site.css
-│   ├── js/app.js
-│   └── img/
+# Project Structure
+# project/
+### ├── app.py
+### ├── celebrities.json
+# ├── static/
+### │   ├── css/site.css
+### │   ├── js/app.js
+### │   └── img/
 │       ├── joji_bg.jpg
 │       ├── taylor.png
 │       ├── joji.jpeg
@@ -125,192 +118,157 @@ project/
 │       ├── travis1.webp
 │       ├── travis2.jpeg
 │       └── travis3.jpg
-└── templates/
-    ├── base.html
-    ├── index.html
-    ├── joji.html
-    ├── taylor-swift.html
-    ├── travis-scott.html
-    └── finneas.html
+# └── templates/
+### ├── base.html
+### ├── index.html
+### ├── joji.html
+### ├── taylor-swift.html
+### ├── travis-scott.html
+### └── finneas.html
 
-Backend Overview (Flask)
-genius_get(path, **params)
-
+## Backend Overview (Flask)
+### genius_get(path, **params)
 A wrapper around all Genius API calls. Attaches headers, manages JSON parsing, and performs error checking.
 
-resolve_artist_id(artist_name)
-
+### resolve_artist_id(artist_name)
 Searches Genius using the /search endpoint and returns the correct artist ID, preferring exact matches.
 
-get_artist_songs(artist_id)
-
+### get_artist_songs(artist_id)
 Retrieves songs for a given artist and filters the list to include only primary-artist tracks.
 
-scrape_two_lyric_lines(song_url)
-
+### scrape_two_lyric_lines(song_url)
 Requests the song’s webpage and extracts lyric text using BeautifulSoup.
 
-fetch_song_quote(artist_name)
-
+### fetch_song_quote(artist_name)
 Coordinates the entire workflow:
 
-ID lookup: resolve_artist_id(artist_name)
-→ song list: get_artist_songs(artist_id)
-→ scraping: scrape_two_lyric_lines(song_url)
-→ quote formatting
+ID lookup resolve_artist_id(artist_name) →
 
+get songs get_artist_songs(artist_id) → 
 
-Returns a consistent dictionary used by both HTML templates and the JSON API.
+pick one → 
 
-Routes
+scrape lyrics scrape_two_lyric_lines(song_url)→ 
+
+format quote fetch_song_quote(artist_name)
+
+Returns a dictionary used by both the HTML templates and the /api/quote/<slug> endpoint.
+
+## Routes
 
 / → Homepage
 
-/celebrity/<slug> → Per-artist page
+/celebrity-name/slug → Per-artist page
 
-/api/quote/<slug> → JSON endpoint for dynamic quote updates
+/api/quote/slug → JSON endpoint for dynamic lyric updates
 
-Frontend Overview
-Templates
-
+## Frontend Overview
+### Templates
 All HTML pages extend base.html, which includes:
 
 Bootstrap
-
 jQuery
+Global CSS
+Genius-style navbar
 
-Global site CSS
-
-The Genius-themed navbar
-
-Each artist template defines:
-
+### Each artist page defines:
 Custom design
-
-The quote section
-
 New Quote and Speak buttons
-
+Quote display
 A preferred TTS voice in extra_scripts
 
-CSS (site.css)
-
+### CSS (site.css)
 Defines:
-
-Global Genius-style color palette / Genius navbar
-
+Genius-style color palette and navbar
 Homepage artist card grid
-
 Per-artist themes
+Joji’s drifting collage background and glass UI elements
 
-Joji’s drifting collage background, custom buttons, glass panel for layout
-
-JavaScript (app.js)
-
+### JavaScript (app.js)
 Implements:
-
-Quote updating logic
-
-AJAX calls to the backend
-
+AJAX quote updating
 Voice selection for browser-side TTS
-
 Speak button functionality
 
-How We Used ChatGPT in the Development Process
+## How We Used ChatGPT in the Development Process
 
-ChatGPT served as a guide and conceptual tutor, mainly for implementing the Genius API + BeautifulSoup webscraping logic in app.py and the Genius-like theming in site.css.
-The team wrote, modified, and tested all actual code before finalization since there were many bugs/issues to work through.
+### ChatGPT served as a conceptual guide for:
+### Genius API limitations
+### BeautifulSoup scraping logic
+### Backend architectural design
+### JSON parsing strategies
+### TTS behavior and voice selection
+### Debugging errors we encountered with webscraping logic, routing, TTS, etc.
 
-1. Understanding Genius API limitations
+### All final code was written, modified, and tested by the team.
 
-ChatGPT clarified that the free Genius API does not return lyric text, which guided us toward combining API metadata with HTML webscraping.
+## 1. Understanding Genius API Limitations
+### ChatGPT clarified that the free Genius API does not return lyric text, requiring metadata retrieval plus HTML scraping.
 
-2. Designing the architecture
+## 2. Designing the Architecture
+### ChatGPT suggested structuring app.py with small, focused helper functions that map directly to:
 
-ChatGPT helped us conceptualize a backend structure with small, focused helper functions rather than one large route.
+genius_get() – API wrapper
 
-Each of the suggestions corresponds to a specific function in our app.py:
+resolve_artist_id() – Artist lookup
 
-API wrapper → genius_get()
+get_artist_songs() – Filtered song list retrieval
 
-Centralizes API requests and prevents duplicated request logic.
+scrape_two_lyric_lines() – Lyric extraction
 
-Artist resolution → resolve_artist_id()
+fetch_song_quote() – Fully utilizes helper functions for our desired workflow process.
 
-Maps human-readable names to numeric Genius IDs, preferring exact matches when multiple hits appear.
+This separation improved maintainability, readability, and debugging.
 
-Song filtering → get_artist_songs()
+## 3. Navigating Dynamic JSON Responses
 
-Filters out features, compilations, and tracks where the artist is not the primary performer.
+### ChatGPT explained:
+The nested structure of Genius JSON responses
 
-Lyric scraping → scrape_two_lyric_lines()
+Why .get() prevents runtime errors
 
-Downloads the Genius page, identifies lyric containers, removes non-lyrical text, and returns cleaned lyric lines.
+How to reliably filter primary-artist songs
 
-Final quote assembly → fetch_song_quote()
-
-Coordinates the full pipeline and returns a dictionary suitable for both HTML templates and the /api/quote/<slug> endpoint.
-
-This structure made the backend easier to maintain, test, and reuse.
-
-3. Navigating dynamic JSON responses
-
-ChatGPT explained Genius's nested JSON, why .get() prevents runtime errors, and how to reliably filter primary-artist songs.
-
-4. Teaching BeautifulSoup scraping patterns
-
-ChatGPT helped us identify:
-
+## 4. BeautifulSoup Scraping Patterns
+### ChatGPT helped identify:
 div[data-lyrics-container="true"]
 
-How to remove section headings
+How to remove section headers and filler lines
 
-How to handle inconsistencies between Genius pages
+How to deal with page inconsistencies
 
-5. Assisting with frontend TTS logic
-
-ChatGPT explained asynchronous voice loading and recommended a simple pattern:
+## 5. Frontend TTS Logic
+### ChatGPT clarified asynchronous voice loading and suggested using:
 
 window.preferredVoiceName = "Microsoft Zira - English (United States)";
 
-6. Debugging and step-by-step testing
+Because voices load asynchronously, each artist page specifies a preferredVoiceName, and app.js selects that voice after the browser finishes loading available voices. 
 
-ChatGPT guided us in testing:
+## 6. Debugging and Step-by-Step Testing
+### ChatGPT guided us through:
+Inspecting JSON
 
-Raw JSON output
+Validating scraper output
 
-Song lists
+Testing AJAX updates (stands for Asynchronous JavaScript and XML)
 
-Scraped lines
+This is defined as: Updating parts of a webpage by sending background requests to the server without reloading the entire page.
 
-Filtering logic
+Verifying TTS functionality
 
-AJAX responses
+## 7. Maintaining Academic Integrity
+### Although ChatGPT provided conceptual support, the team:
+Wrote all final code
 
-TTS output
+Integrated all components
 
-This helped validate each function as we encountered bugs.
+Debugged scraper and API issues
 
-7. Maintaining academic integrity
+Finalized all HTML/CSS/JS on our own depending on how we wanted to customize our webpage(specific fonts, padding, colors, margins, etc.)
 
-Although ChatGPT provided explanations and patterns, the team:
+## Conclusion
+This project integrates Flask, HTML templates, CSS, JavaScript (including jQuery and TTS), the Genius API, and BeautifulSoup webscraping. 
 
-Wrote the final code
+The combination of API metadata, real-time scraping, and browser-based text-to-speech gives a fun and interactive user experience. 
 
-Integrated functions into the app
-
-Debugged scraper and API edge cases
-
-Adjusted HTML/CSS to fit the design
-
-Verified all routing and behaviors independently
-
-The final implementation reflects our understanding, with ChatGPT used as a conceptual resource for unfamiliar topics.
-
-Conclusion
-
-This project integrates Flask, HTML templates, CSS, JavaScript (including jQuery and TTS), the Genius API, and BeautifulSoup webscraping.
-The combination of API metadata, real-time scraping, and browser-based text-to-speech creates an interactive lyric exploration application.
-
-The structure, logic, and design decisions were developed by the team, with ChatGPT serving as a conceptual guide for understanding unfamiliar code structures, API behavior, and debugging strategies encountered during development.
+The structure, logic, and design decisions throughout the project were developed by the team, with ChatGPT serving as a conceptual resource for understanding unfamiliar code structures, API structures, and debugging strategies for all the errors we encountered.
