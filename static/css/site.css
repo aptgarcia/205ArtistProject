@@ -1,6 +1,8 @@
-/*This site.css(cascading style sheet) was guided by ChatGPT and implemented the genius-ish Theme for 
-the navbar on each page, and styling for the homepage artist card layout in index.html webpage,
-and background drifting collage/buttons for joji.html. */
+/*This site.css(cascading style sheet) was guided by ChatGPT and explained the structure that 
+implemented the genius-ish Theme for the navbar on each page, styling for the homepage artist 
+card layout in index.html webpage, and background drifting collage/buttons/layout for joji.html. 
+We then adjusted any colors(background, fonts, layout), spacing(font size, padding, borders, margins), 
+layout/alignment to fit well for our webpage.  */
 
 /* ===== Genius-ish Bright Theme (Navbar + Index) ===== */
 :root {
@@ -155,11 +157,11 @@ body.home-page .index-footer {
   margin-top: 2rem;
 }
 
-/* Ensure Taylor Swift's face is visible by cropping from the top */
+/* Ensures Taylor Swift's face is visible by cropping from the top */
 body.home-page .artist-card-top img {
   object-fit: cover;
-  object-position: top center;  /* pull image upward */
-  height: 190px;                /* same height as other cards */
+  object-position: top center;  /* pulls image upward */
+  height: 190px;                /* and make its same height as other cards */
 }
 
 
@@ -167,7 +169,7 @@ body.home-page .artist-card-top img {
 body.joji-page {
   min-height: 100vh;
   position: relative;
-  color: #000000;        /* ALL text black */
+  color: #000000;        
   overflow-x: hidden;
 }
 
@@ -204,7 +206,7 @@ body.joji-page .blockquote,
 body.joji-page .blockquote-footer {
   color: #000000;        /* PURE BLACK text */
   font-weight: 800;      /* extra bold */
-  text-shadow: none !important; /* remove all halos */
+  text-shadow: none; /* remove all halos */
 }
 
 /* JOJI BUTTONS — dark theme   */
@@ -212,8 +214,8 @@ body.joji-page #btn-new,
 body.joji-page #btn-tts {
   background-color: #d3d3d3; 
   border-color: #bcbcbc;
-  color: #000000 !important;     /* BLACK TEXT */
-  font-weight: 800;              /* bold */
+  color: #000000;     /* BLACK TEXT */
+  font-weight: 800;              /* makes it bold */
   border-radius: 8px;
   padding: 0.55rem 1.2rem;
   box-shadow: 0 3px 8px rgba(0,0,0,0.45);
@@ -227,8 +229,8 @@ body.joji-page #btn-tts:hover {
 
 /* Back button — black outline + bold black text */
 body.joji-page a.btn-outline-dark {
-  border-color: #000 !important;
-  color: #000 !important;
+  border-color: #000;
+  color: #000;
   font-weight: 800;
   border-radius: 8px;
   padding: 0.55rem 1.2rem;
@@ -237,7 +239,7 @@ body.joji-page a.btn-outline-dark {
 
 body.joji-page a.btn-outline-dark:hover {
   background-color: rgba(0,0,0,0.12);
-  color: #000 !important;
+  color: #000;
 }
 
 /* Vertical drifting animation */
@@ -246,10 +248,7 @@ body.joji-page a.btn-outline-dark:hover {
   to   { background-position: center 400px; }
 }
 
-/* ========================================= */
 /* JOJI PAGE — GLASS PANEL FOR ABOUT/LINKS  */
-/* ========================================= */
-
 body.joji-page .joji-panel {
   background: rgba(255, 255, 255, 0.32);
   backdrop-filter: blur(8px);
@@ -283,27 +282,27 @@ body.joji-page .joji-links-description {
   font-weight: 600;
 }
 
-/* Make the link buttons look clean inside the glass panel */
+/* Make the link buttons look visible enough inside the glass panel */
 body.joji-page .joji-panel .btn-outline-dark {
   border-width: 2px;
   font-weight: 700;
-  color: #000 !important;
-  border-color: #000 !important;
+  color: #000;
+  border-color: #000;
   background: rgba(255,255,255,0.4);
 }
 
 body.joji-page .joji-panel .btn-outline-dark:hover {
   background: rgba(0,0,0,0.12);
-  color: #000 !important;
+  color: #000;
 }
 
 /* Push all Joji content downward so it sits nicely over the collage */
 body.joji-page .joji-content-wrapper {
-  margin-top: 120px;      /* adjust to 100–180px depending on your taste */
+  margin-top: 120px;      
 }
 
 /* Push the glass panel down even more for visual balance */
 body.joji-page .joji-panel {
-  margin-top: 70px;       /* adjust to 50–120px for perfect centering */
+  margin-top: 70px;       
 }
 
