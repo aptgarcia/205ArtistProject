@@ -270,9 +270,24 @@ Debugged scraper and API issues
 
 Finalized all HTML/CSS/JS on our own depending on how we wanted to customize our webpage(specific fonts, padding, colors, margins, etc.)
 
+## Future Work and Differences from Original Design Goals
+
+In our original CST 205 design document, we planned a broader feature set, including using the Quotable API for motivational quotes, the Wikimedia API for celebrity images, and optional integrations with Piper (TTS) and SadTalker for animated faces and server-side audio. 
+
+During testing, we discovered that the Quotable API was mainly for use with authors/speakers and not music artists and we wanted to find "inspirational quotes" from our celebrity interviews. We decided to swtich to using Genius API/BeautifulSoup webscraping to find short random lyric quotes. 
+
+The Wikimedia API for celebrity images would be a good idea if we were not choosing 4 specific celebrities and instead wanted to pull from wikimedia API to find a random celebrity image/description(about me section)/ their most popular songs/awards won. This would also be implemented well with the Genius API to find their random song lyrics as well and it would create a full page displaying all the wikimedia API ideas above + the Genius API lyrics and link to the specific song. If we had more time this could have been achievable.
+
+Also after looking into the Piper API (TTS) we found that it would be alot more complicated to add a server-side API TTS and realized it would make our webapp even slower since loading the request for the random Genius API/webscraping lyric already took a decent amount of time to get a response and to load it onto the webpage. 
+
+After looking into Sadtalker we decided it was too difficult to implement since it needs its own separate program running in the background, and it requires an audio file for every random lyric before it can create a moving video of the face. This means we would have to integrate a server-side TTS that we could also download the audio file from to be able to use SadTalker. This would have made each page take a long time to load, and we didn’t have enough time to set up and automate this level of complexity. This may have been possible if it was a project we had several months to work on maybe.
+
+Another idea we didnt get to add was implementing a “Guess the Artist” mode where the app shows a random 2 lyric line or just plays the TTS for the lyrics, without revealing the artist name, and users select from multiple-choice answers between the 4 artists we chose to focus on. For this game there were ideas to add simple scoring, score streaks, or a history of correctly/incorrectly guessed questions.
+
 ## Conclusion
 This project integrates Flask, HTML templates, CSS, JavaScript (including jQuery and TTS), the Genius API, and BeautifulSoup webscraping. 
 
 The combination of API metadata, real-time scraping, and browser-based text-to-speech gives a fun and interactive user experience. 
 
 The structure, logic, and design decisions throughout the project were developed by the team, with ChatGPT serving as a conceptual resource for understanding unfamiliar code structures, API structures, and debugging strategies for all the errors we encountered.
+
