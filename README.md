@@ -7,6 +7,8 @@
 
 ## The app includes artist themed pages, dynamic quote loading, and browser-side TTS.
 
+## Trello Link: https://trello.com/invite/b/691bbc165c3c3fdc9ab6ea1e/ATTI413c1597c9890f227823d8bf48d6932f5C011DB6/team-12469-cst205
+
 ## Installation & Setup Guide
 
 Follow these steps before running the application.
